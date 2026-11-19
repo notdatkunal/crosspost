@@ -1,36 +1,30 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Crosspost
+
+Write once, publish everywhere. A lightweight, JS-first microblogging and publishing cross-poster with **zero database** and a **stateless thin proxy** (`/api/post`) so you can focus on business logic.
+
+## Supported Platforms
+
+| Platform | Char Limit | Title Support | Publishing Mode |
+| :--- | :--- | :--- | :--- |
+| **X (Twitter)** | 280 | No | Stateless proxy (`/api/post`) |
+| **Threads** | 500 | No | Stateless proxy (`/api/post`) |
+| **Medium** | 100,000 | Yes | Stateless proxy (`/api/post`, creates draft) |
+| **Bluesky** | 300 | No | Direct from browser (CORS-enabled) |
+| **Mastodon** | 500 | No | Direct from browser (CORS-enabled) |
+| **LinkedIn** | 3,000 | No | Stateless proxy (`/api/post`) |
+| **Dev.to** | 100,000 | Yes | Stateless proxy (`/api/post`, creates draft) |
+
+## Architecture
+
+- **Frontend (`src/app/page.js`)**: Composer with platform toggles, live character-limit indicators, and **BYOK (Bring Your Own Key)** token storage in `localStorage`.
+- **Platform Registry (`src/lib/platforms.js`)**: Central config for character limits, token labels, and proxy/direct routing.
+- **Stateless Proxy (`src/app/api/post/route.js`)**: Forwards requests to CORS-blocked APIs (X, Threads, Medium, LinkedIn, Dev.to) without storing credentials or needing a database.
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Open [http://localhost:3000](http://localhost:3000), click **API Keys (BYOK)** to add your platform tokens, and start posting.
